@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'data/datasources/product_api_service.dart';
-import 'data/repositories/product_repository_impl.dart';
+import 'core/di/service_locator.dart';
 import 'presentation/cubits/product_list/product_list_cubit.dart';
 import 'presentation/cubits/product_detail/product_detail_cubit.dart';
 import 'presentation/router/app_router.dart';
 
 void main() {
-  final apiService = ProductApiService();
-  final repository = ProductRepositoryImpl(apiService: apiService);
-
-  runApp(ProductListApp(repository: repository));
+  setupDependencies();
+  runApp(const ProductListApp());
 }
 
 class ProductListApp extends StatelessWidget {
-  final ProductRepositoryImpl repository;
-
-  const ProductListApp({
-    super.key,
-    required this.repository,
-  });
+  const ProductListApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +21,10 @@ class ProductListApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ProductListCubit>(
-          create: (_) => ProductListCubit(repository: repository),
+          create: (_) => getIt<ProductListCubit>(),
         ),
         BlocProvider<ProductDetailCubit>(
-          create: (_) => ProductDetailCubit(repository: repository),
+          create: (_) => getIt<ProductDetailCubit>(),
         ),
       ],
       child: MaterialApp.router(
