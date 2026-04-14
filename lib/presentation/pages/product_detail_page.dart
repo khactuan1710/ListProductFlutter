@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../core/di/service_locator.dart';
 import '../cubits/product_detail/product_detail_cubit.dart';
 import '../cubits/product_detail/product_detail_state.dart';
 import '../widgets/error_view.dart';
@@ -22,16 +24,12 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
-  void initState() {
-    super.initState();
-    context.read<ProductDetailCubit>().loadProduct(widget.productId);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductDetailCubit, ProductDetailState>(
-      builder: (context, state) {
-        return switch (state) {
+    return BlocProvider<ProductDetailCubit>(
+      create: (_) => getIt<ProductDetailCubit>()..loadProduct(widget.productId),
+      child: BlocBuilder<ProductDetailCubit, ProductDetailState>(
+        builder: (context, state) {
+          return switch (state) {
           ProductDetailInitial() => const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             ),
@@ -122,7 +120,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
             ),
         };
-      },
+        },
+      ),
     );
   }
 

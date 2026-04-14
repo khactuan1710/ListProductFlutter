@@ -25,7 +25,3 @@ class AppRouter extends RootStackRouter {
     ),
   ];
 }
-
-//thêm injectable + getIt tự sinh file cấu hình
-//thêm AutoRoute, AutoRouteGuard lúc chạy thì có sinh file router tự động
-//ở chỗ login em dùng tạm shared_preferences làm DB local, và AuthGuard làm midleware trong auto_route để check đăng nhập chưa để điều hướng ạ.
