@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../domain/repositories/product_repository_interface.dart';
 import '../../../data/exceptions/product_api_exception.dart';
 import 'product_detail_state.dart';
 
+@injectable
 class ProductDetailCubit extends Cubit<ProductDetailState> {
   final ProductRepository _repository;
 

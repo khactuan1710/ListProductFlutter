@@ -2,25 +2,25 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
 import '../models/product_model.dart';
 import '../exceptions/product_api_exception.dart';
 import 'logger/logging_client.dart';
 
+@lazySingleton
 class ProductApiService {
   static const _baseUrl = 'https://dummyjson.com';
   static const _timeout = Duration(seconds: 10);
 
   final http.Client _client;
 
-  ProductApiService({http.Client? client})
-    : _client = client ?? LoggingClient(http.Client());
+  ProductApiService() : _client = LoggingClient(http.Client());
 
   Future<List<ProductModel>> getProducts() async {
     try {
-      final response = await _client
-          .get(Uri.parse('$_baseUrl/products'))
-          .timeout(_timeout);
+      final response =
+          await _client.get(Uri.parse('$_baseUrl/products')).timeout(_timeout);
 
       if (response.statusCode == 200) {
         try {

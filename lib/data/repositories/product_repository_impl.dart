@@ -1,7 +1,9 @@
 import '../../domain/entities/product.dart';
 import '../../domain/repositories/product_repository_interface.dart';
+import 'package:injectable/injectable.dart';
 import '../datasources/product_api_service.dart';
 
+@LazySingleton(as: ProductRepository)
 class ProductRepositoryImpl implements ProductRepository {
   final ProductApiService _apiService;
 

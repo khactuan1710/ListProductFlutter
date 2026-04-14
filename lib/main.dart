@@ -5,6 +5,7 @@ import 'core/di/service_locator.dart';
 import 'presentation/cubits/product_list/product_list_cubit.dart';
 import 'presentation/cubits/product_detail/product_detail_cubit.dart';
 import 'presentation/router/app_router.dart';
+import 'presentation/router/guards/auth_guard.dart';
 
 void main() {
   setupDependencies();
@@ -16,7 +17,7 @@ class ProductListApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final router = createAppRouter();
+    final router = AppRouter(authGuard: getIt<AuthGuard>());
 
     return MultiBlocProvider(
       providers: [
@@ -34,7 +35,7 @@ class ProductListApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        routerConfig: router,
+        routerConfig: router.config(),
       ),
     );
   }

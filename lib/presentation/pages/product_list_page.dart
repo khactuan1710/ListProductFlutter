@@ -1,11 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import '../cubits/product_list/product_list_cubit.dart';
 import '../cubits/product_list/product_list_state.dart';
+import '../router/app_router.dart';
 import '../widgets/product_list_view.dart';
 import '../widgets/error_view.dart';
 
+@RoutePage()
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});
 
@@ -43,10 +45,7 @@ class _ProductListPageState extends State<ProductListPage> {
               onRefresh: () =>
                   context.read<ProductListCubit>().refreshProducts(),
               onProductTap: (product) {
-                context.pushNamed(
-                  'productDetail',
-                  pathParameters: {'id': product.id.toString()},
-                );
+                context.pushRoute(ProductDetailRoute(productId: product.id));
               },
             ),
           };

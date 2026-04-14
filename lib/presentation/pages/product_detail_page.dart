@@ -1,13 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
 import '../cubits/product_detail/product_detail_cubit.dart';
 import '../cubits/product_detail/product_detail_state.dart';
 import '../widgets/error_view.dart';
 
-
+@RoutePage()
 class ProductDetailPage extends StatefulWidget {
   final int productId;
 
@@ -44,7 +44,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
               body: ErrorView(
                 message: message,
-                onRetry: () => context.pop(),
+                onRetry: () => context.router.pop(),
                 retryLabel: 'Go Back',
               ),
             ),
